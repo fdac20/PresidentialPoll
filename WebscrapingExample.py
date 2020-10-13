@@ -180,7 +180,8 @@ for i in range(0,len(red_states)):
     total += red_state_values[i]
 print("Total\t" + str(total))
 
-
+"""
+#Graph/Table stuff
 objects = ('Python', 'C++', 'Java', 'Perl', 'Scala', 'Lisp')
 y_pos = np.arange(len(objects))
 performance = [10,8,6,4,2,1]
@@ -202,4 +203,4 @@ for i in range(0,len(biden_values)):
         trump_lean+= state_value[i]
 num_combos = 0
 print("Biden combos")
-"""
+
