@@ -7,9 +7,9 @@ Presidential Data: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:
 
 
 Responsiblites: 
-Zac: Population Data
-Justin & Christian: Pandas Parsing / directing data into graph
-Emory & Omar: sliding library
+Zac: Population Data,
+Justin & Christian: Pandas Parsing / directing data into graph,
+Emory & Omar: sliding library,
 
 
 
