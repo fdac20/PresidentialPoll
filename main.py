@@ -1,13 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[68]:
-
-
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+
 import plotly.graph_objects as go
 from matplotlib.widgets import Slider, Button, RadioButtons
 import matplotlib.gridspec as gridspec
@@ -130,11 +125,12 @@ for year in election_years:
         
 
 setColor = {}
+
 #1976    
 for YEAR, STATES in slides.items():
     if YEAR == 1976:
         print("Year: ", YEAR)
-        setYear = YEAR  
+        setYear = YEAR
         for STATE, WINNER in STATES.items():
             print("\tState: ", STATE)
             print("\tWinner: ", WINNER.name)
@@ -145,15 +141,47 @@ for YEAR, STATES in slides.items():
             if WINNER.party == "republican":
                 setColor[STATE] = 100
 
-      
-        
+
+years = []
+WinnerVotes = {}
+LoserVotes ={}
+PieVotes = {}
+votesBar = 0  
+votesLine = 0
+votesPieD = 0   
+votesPieR = 0    
+for YEAR, STATES in slides.items():
+    #print("Year: ", YEAR)
+    years.append(YEAR)
+    for STATE, WINNER in STATES.items():
+        #print("\tState: ", STATE)
+        #print("\tWinner: ", WINNER.name)
+        #print("\tcandidate_votes: ", WINNER.candidate_votes, ", total_votes: ", WINNER.total_votes, ", party: ", WINNER.party)
+        #print()
+        votesBar += WINNER.candidate_votes
+        votesLine = WINNER.total_votes - WINNER.candidate_votes 
+        if WINNER.party == 'democrat':
+            votesPieD += WINNER.candidate_votes       
+        if WINNER.party == 'republican':
+            votesPieR += WINNER.candidate_votes
+    WinnerVotes[YEAR] = votesBar
+    LoserVotes[YEAR] = votesLine
+    PieVotes["democrat"] = votesPieD
+    PieVotes["republican"] = votesPieR
+    votesBar = 0  
+    votesLine = 0
+    votesPieD = 0   
+    votesPieR = 0  
+    
+
+          
         
 ###############################################
 
 ## Plot U.S. Map
 
 #print(slides)
-fig = plt.figure()
+fig = plt.figure(1)
 ax = fig.add_axes([0, 0, 1, 1], projection=ccrs.LambertConformal())
 
 ax.set_extent([-125, -66.5, 20, 50], ccrs.Geodetic())
@@ -206,9 +234,62 @@ a0 = 5
 axcolor = 'lightgoldenrodyellow'
 axamp = plt.axes([0.25, 0.15, 0.65, 0.03], facecolor=axcolor)
 samp = Slider(axamp, 'Amp', 0.1, 10.0, valinit=a0)
+plt.savefig('StatesGraph.png')
+
+
+
+
+# Bar Graph Code for Total number of Votes to Win over Time 
+plt.figure(2)
+yValues =[]
+plt.style.use('ggplot')
+for i in years:
+    yValues.append(WinnerVotes.get(i))
+    print(i)
+
+for i in yValues:
+    print(i)
+
+plt.bar(years, yValues, color='green')
+plt.xlabel("Year")
+plt.ylabel("Total Votes")
+plt.title("Total Votes to Win Over Time")
+plt.savefig('barGraph.png')
+
+# Line Graph Code for difference in vote between winner and loser 
+plt.figure(3)
+yLine =[]
+plt.style.use('ggplot')
+for i in years:
+    yLine.append(LoserVotes.get(i))
+    print(i)
+
+for i in yLine:
+    print(i)
+
+plt.plot(years, yLine, color='blue')
+plt.xlabel("Year")
+plt.ylabel("Total Votes less than Winner Votes")
+plt.title("Difference in Vote between Winner/Loser")
+plt.savefig('LineGraph.png')
+
+
+plt.figure(4)
+# Pie Graph Code for average % of vote Republican and Democrat 
+labels = 'Republican', 'Democrat'
+sizes = [PieVotes.get('republican'),PieVotes.get('democrat')]
+print("Dem Votes: ", PieVotes.get('democrat'))
+print("Rep Votes: ", PieVotes.get('republican'))
+
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+plt.title("Average Percent of Votes Rep VS Dem")
+plt.savefig('PieGraph.png')
+
 
 plt.show()
-
 
 
 
