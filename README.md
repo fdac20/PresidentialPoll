@@ -1,6 +1,7 @@
 # PresidentialPoll
 
-### NOTE: To view the html files in /plots/html_plots/ click view raw, right click and save to your local machine, then open the saved file with your web browser.    
+### NOTE: To view the html files in /plots/html_plots/ [visit here](http://web.eecs.utk.edu/~jlangst6/COSC545/)
+To view the html files in /plots/html_plots/ on your local machine, click view raw, right click and save to your local machine, then open the saved file with your web browser.    
 
 BeautufulSoup Docs: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
